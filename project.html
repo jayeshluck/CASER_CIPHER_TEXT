@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher Encryption/Decryption</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+        body{
+        font-family: Arial, sans-serif;
+        background-image: url('cybersecurity.jpg')
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    
+        }
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-weight: bold;
+    }
+    
+    textarea, input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    #result {
+        font-weight: bold;
+        font-size: 18px;
+    }
+    </style>
+    
+    <div class="container">
+        <h1>Caesar Cipher Encryption/Decryption</h1>
+        <label for="text">Enter Text:</label>
+        <textarea id="text" rows="4" placeholder="Enter your text here"></textarea>
+        <label for="shift">Shift Value:</label>
+        <input type="number" id="shift" placeholder="Enter the shift value">
+        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="decrypt()">Decrypt</button>
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        function encrypt() {
+            const text = document.getElementById('text').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            const encryptedText = caesarCipher(text, shift);
+            document.getElementById('result').innerText = `Encrypted Text: ${encryptedText}`;
+        }
+
+        function decrypt() {
+            const text = document.getElementById('text').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            const decryptedText = caesarCipher(text, -shift);
+            document.getElementById('result').innerText = `Decrypted Text: ${decryptedText}`;
+        }
+
+        function caesarCipher(text, shift) {
+            return text
+                .split('')
+                .map(char => {
+                    if (char.match(/[a-zA-Z]/)) {
+                        const charCode = char.charCodeAt(0);
+                        const isUpperCase = char === char.toUpperCase();
+                        const base = isUpperCase ? 65 : 97;
+                        return String.fromCharCode(((charCode - base + shift) % 26 + 26) % 26 + base);
+                    }
+                    return char;
+                })
+                .join('');
+        }
+    </script>
+</body>
+</html>
